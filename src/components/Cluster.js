@@ -1,11 +1,10 @@
 import React from 'react';
 
 class Cluster extends React.Component {
-
   render() {
     return (
       <button onClick={this.props.performClustering}>
-	Perform Clustering
+        Perform Clustering
       </button>
     );
   }

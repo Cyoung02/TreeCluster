@@ -1,7 +1,6 @@
 import React from 'react';
 
 class TreeSelect extends React.Component {
-
   render() {
     return (
       <form>
