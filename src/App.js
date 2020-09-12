@@ -1,28 +1,30 @@
 import React from 'react';
 import './App.css';
-import TreeSelect from './components/TreeSelect';
-import Cluster from './components/Cluster.js';
-import Method from './components/Method.js';
-import Threshold from './components/Threshold.js';
+import Sidebar from './components/Sidebar.js';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      file: '',
+      fileName: '',
+      fileSize: '',
       tree: '',
       method: 'Maximum Clade',
-      threshold: ''
+      threshold: '0.5',
+      xPosition: -200
     }
   }
 
+  /*
+   * Reads the file into the tree state variable
+   * TODO check for invalid tree
+   */
   handleFileSelect = (event) => {
+    event.persist()
     this.setState({
-      file: event.target.files[0]
+      fileName: event.target.files[0].name,
+      fileSize: event.target.files[0].size
     });
-  }
-
-  performClustering = (event) => {
     const fr = new FileReader();
     fr.onload = (event) => {
       document.getElementById('tester').textContent=fr.result;
@@ -30,23 +32,44 @@ class App extends React.Component {
         tree: fr.result
       });
     }
-    fr.readAsText(this.state.file);
+    fr.readAsText(event.target.files[0]);
+    console.log(event)
   }
 
-  //TODO add description of clustering methods beneath?
+  /*
+   * performs clustering analyses
+   */
+  performClustering = (event) => {
+    //TODO perform clustering analyses
+  }
+
+
+  /*
+   * Update the clustering method state variable
+   * when the clustering method is altered
+   * TODO Add Clustering Method Description
+   */
   handleMethodChange = (event) => {
     this.setState({
       method: event.target.value
     });
   }
 
+  /*
+   * When the clustering threshold slider changes, set
+   * the box to match and update the state variable
+   */
   handleThresholdChangeSlider = (event) => {
     this.setState({
       threshold: event.target.value
     });
     document.getElementById('box').value = document.getElementById('slider').value;
   }
-
+  
+  /*
+   * When the clustering threshold box changes, set the
+   * slider to match and update the state variable
+   */
   handleThresholdChangeBox = (event) => {
     this.setState({
       threshold: event.target.value
@@ -54,13 +77,40 @@ class App extends React.Component {
     document.getElementById('slider').value = document.getElementById('box').value;
   }
 
+  /*
+   * closes sidebar
+   */
+  closeMenu = () => {
+    this.setState({
+      xPosition: -200
+    });
+  }
+
+  /*
+   * opens sidebar
+   */
+  openMenu = () => {
+    this.setState({
+      xPosition: 0
+    });
+  }
+ 
   render() { 
     return (
       <React.Fragment>
-        <TreeSelect handleFileSelect={this.handleFileSelect} />
-        <Method handleMethodChange={this.handleMethodChange} />
-        <Threshold handleThresholdChangeSlider={this.handleThresholdChangeSlider} handleThresholdChangeBox={this.handleThresholdChangeBox} />
-        <Cluster performClustering={this.performClustering} />
+        <Sidebar 
+	  width='200'
+	  xPosition={this.state.xPosition}
+	  closeMenu={this.closeMenu}
+	  openMenu={this.openMenu}
+          handleFileSelect={this.handleFileSelect}
+          handleMethodChange={this.handleMethodChange}
+          handleThresholdChangeSlider={this.handleThresholdChangeSlider}
+          handleThresholdChangeBox={this.handleThresholdChangeBox}
+          performClustering={this.performClustering}
+        />
+        <button onClick={() => this.openMenu()}>menu
+        </button>
         <pre id='tester'></pre>
       </React.Fragment>
     );
