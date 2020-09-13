@@ -5,14 +5,16 @@ import Sidebar from './components/Sidebar.js';
 class App extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
       fileName: '',
       fileSize: '',
       tree: '',
       method: 'Maximum Clade',
       threshold: '0.5',
-      xPosition: -200,
-      open: false
+      sidebarSize: 200,
+      xPosition: 0,
+      open: true
     }
   }
 
@@ -82,7 +84,7 @@ class App extends React.Component {
    */
   closeMenu = () => {
     this.setState({
-      xPosition: -200,
+      xPosition: -this.state.sidebarSize,
       open: false
     });
   }
@@ -97,7 +99,7 @@ class App extends React.Component {
     });
     setTimeout(() => { 
       this.setState({open: true}); 
-    }, 800);
+    }, 500);
   }
  
   escFunction = (event) => {
@@ -110,11 +112,11 @@ class App extends React.Component {
     return (
       <React.Fragment>
         <Sidebar 
-	  width='200'
-	  xPosition={this.state.xPosition}
-	  escFunction={this.escFunction}
-	  closeMenu={this.closeMenu}
-	  openMenu={this.openMenu}
+          width={this.state.sidebarSize}
+          xPosition={this.state.xPosition}
+          escFunction={this.escFunction}
+          closeMenu={this.closeMenu}
+          openMenu={this.openMenu}
           handleFileSelect={this.handleFileSelect}
           handleMethodChange={this.handleMethodChange}
           handleThresholdChangeSlider={this.handleThresholdChangeSlider}
