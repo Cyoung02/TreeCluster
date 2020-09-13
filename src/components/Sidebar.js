@@ -6,25 +6,18 @@ import Method from './Method.js';
 import Threshold from './Threshold.js';
 
 class Sidebar extends React.Component {
-
-  /*
-   * TODO Fix choppy animation
-   *
-  escFunction = (event) => {
-    if(event.keyCode === 27) {
-      this.props.closeMenu();
-    }
+  constructor() {
+    super() 
+    this.ref = React.createRef()
   }
-  
+
   componentDidMount() {
-    document.addEventListener("keydown", this.escFunction);
+    document.addEventListener("keydown", this.props.escFunction);
   }
   
   componentWillUnmount() {
-    document.removeEventListener("keydown", this.escFunction);
+    document.removeEventListener("keydown", this.props.escFunction);
   }
-  */
-  
 
   render() {
     return (

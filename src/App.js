@@ -11,7 +11,8 @@ class App extends React.Component {
       tree: '',
       method: 'Maximum Clade',
       threshold: '0.5',
-      xPosition: -200
+      xPosition: -200,
+      open: false
     }
   }
 
@@ -42,7 +43,6 @@ class App extends React.Component {
   performClustering = (event) => {
     //TODO perform clustering analyses
   }
-
 
   /*
    * Update the clustering method state variable
@@ -82,25 +82,37 @@ class App extends React.Component {
    */
   closeMenu = () => {
     this.setState({
-      xPosition: -200
+      xPosition: -200,
+      open: false
     });
   }
 
   /*
-   * opens sidebar
+   * opens sidebar and sets open state
+   * to prevent abrupt closing animations
    */
   openMenu = () => {
     this.setState({
       xPosition: 0
     });
+    setTimeout(() => { 
+      this.setState({open: true}); 
+    }, 800);
   }
  
+  escFunction = (event) => {
+    if(event.keyCode === 27 && this.state.open) {
+      this.closeMenu();
+    }
+  }
+
   render() { 
     return (
       <React.Fragment>
         <Sidebar 
 	  width='200'
 	  xPosition={this.state.xPosition}
+	  escFunction={this.escFunction}
 	  closeMenu={this.closeMenu}
 	  openMenu={this.openMenu}
           handleFileSelect={this.handleFileSelect}
