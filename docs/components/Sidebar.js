@@ -23,16 +23,16 @@ class Sidebar extends React.Component {
     return (
       <React.Fragment>
         <div className='sidebar' 
-	  style={{
+          style={{
             transform: `translatex(${this.props.xPosition}px)`,
-	    width: `${this.props.width}px`
+            width: `${this.props.width}px`
           }}>
           <div className='content'>
             <button id='close' onClick={() => this.props.closeMenu()}>close</button>
             <TreeSelect handleFileSelect={this.props.handleFileSelect} />
             <Method handleMethodChange={this.props.handleMethodChange} />
             <Threshold handleThresholdChangeSlider={this.props.handleThresholdChangeSlider} 
-	      handleThresholdChangeBox={this.props.handleThresholdChangeBox} />
+              handleThresholdChangeBox={this.props.handleThresholdChangeBox} />
             <Cluster performClustering={this.props.performClustering} />
           </div>
         </div>
