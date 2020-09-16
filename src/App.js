@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import Sidebar from './components/Sidebar.js';
+import * as treecluster from './algorithms/treecluster.js';
 
 class App extends React.Component {
   constructor(props) {
@@ -44,6 +45,7 @@ class App extends React.Component {
    */
   performClustering = (event) => {
     //TODO perform clustering analyses
+    treecluster.test();
   }
 
   /*

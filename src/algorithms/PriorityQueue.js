@@ -9,7 +9,7 @@ class Node {
   }
 }
 
-class PriorityQueue {
+export class PriorityQueue {
   constructor() {
     this.heap = [null]
   }
