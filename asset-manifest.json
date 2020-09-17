@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/TreeCluster/static/css/main.24a2c1d9.chunk.css",
-    "main.js": "/TreeCluster/static/js/main.0c10e42c.chunk.js",
-    "main.js.map": "/TreeCluster/static/js/main.0c10e42c.chunk.js.map",
+    "main.js": "/TreeCluster/static/js/main.ada81dc1.chunk.js",
+    "main.js.map": "/TreeCluster/static/js/main.ada81dc1.chunk.js.map",
     "runtime-main.js": "/TreeCluster/static/js/runtime-main.d145f084.js",
     "runtime-main.js.map": "/TreeCluster/static/js/runtime-main.d145f084.js.map",
     "static/js/2.075201e9.chunk.js": "/TreeCluster/static/js/2.075201e9.chunk.js",
     "static/js/2.075201e9.chunk.js.map": "/TreeCluster/static/js/2.075201e9.chunk.js.map",
     "index.html": "/TreeCluster/index.html",
-    "precache-manifest.f74405e3255e29e95941038b46474409.js": "/TreeCluster/precache-manifest.f74405e3255e29e95941038b46474409.js",
+    "precache-manifest.dd2803a6828fb82351d2893a15dadde7.js": "/TreeCluster/precache-manifest.dd2803a6828fb82351d2893a15dadde7.js",
     "service-worker.js": "/TreeCluster/service-worker.js",
     "static/css/main.24a2c1d9.chunk.css.map": "/TreeCluster/static/css/main.24a2c1d9.chunk.css.map",
     "static/js/2.075201e9.chunk.js.LICENSE.txt": "/TreeCluster/static/js/2.075201e9.chunk.js.LICENSE.txt"
@@ -17,6 +17,6 @@
     "static/js/runtime-main.d145f084.js",
     "static/js/2.075201e9.chunk.js",
     "static/css/main.24a2c1d9.chunk.css",
-    "static/js/main.0c10e42c.chunk.js"
+    "static/js/main.ada81dc1.chunk.js"
   ]
 }
