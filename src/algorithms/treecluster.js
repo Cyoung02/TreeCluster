@@ -68,14 +68,27 @@ export function p_to_jc(d,seq_type) {
   }
 }
 
-//TODO figure out phylotree
 export function cut(node) {
   const cluster = [];
   const descendants = new Queue();
   descendants.put(node);
   while (!descendants.empty()) {
     const descendant = descendants.get();
+    if (descendant.DELETED) {
+      continue;
+    }
+    descendant.DELETED = true;
+    descendant.left_dist = 0;
+    descendant.right_dist = 0;
+    descendant.edge_length = 0;
+    if (descendant.is_leaf()) {
+      cluster.push(descendant.to_string());
+    }
+    else {
+      descendant.children.forEach(element => descendants.put(element));
+    }
   }
+  return cluster;
 }
 
 export function prep(tree, support){
@@ -110,4 +123,5 @@ export function pairwise_dists_below_thresh(tree,threshold) {
 }
 
 export const test = () => {
+  console.log("hello");
 }

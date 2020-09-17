@@ -7,6 +7,9 @@ export class TreeNode {
     this.label = label;
     this.edge_length = edge_length;
     this.DELETED = false;
+    this.confidence = null;
+    this.left_dist = null;
+    this.right_dist = null
   }
 
   to_string() {
