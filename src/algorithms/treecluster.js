@@ -1,5 +1,6 @@
 import {Queue} from './Queue';
 import {PriorityQueue} from './PriorityQueue';
+import {Tree, TreeNode} from './TreeSwift';
 
 export function merge_two_sorted_lists(x,y) { 
   const out = [];
@@ -28,7 +29,7 @@ export function merge_two_sorted_lists(x,y) {
 export function merge_multi_sorted_lists(lists) {
   const pq = new PriorityQueue();
   for (let l = 0; l < lists.length; l++) {
-    if (lists[l].length != 0) {
+    if (lists[l].length !== 0) {
       pq.put(lists[l][0], l);
     }
   }
@@ -48,7 +49,7 @@ export function merge_multi_sorted_lists(lists) {
 }
 
 export function median(x) {
-  if (x.length % 2 != 0) {
+  if (x.length % 2 !== 0) {
     return x[parseInt(x.length / 2)];
   } else {
     return (x[x.length / 2] + x[(x.length / 2) - 1]) / 2;
@@ -67,7 +68,7 @@ export function p_to_jc(d,seq_type) {
   }
 }
 
-//TODO understand treeswift and implement queue
+//TODO figure out phylotree
 export function cut(node) {
   const cluster = [];
   const descendants = new Queue();
@@ -78,9 +79,35 @@ export function cut(node) {
 }
 
 export function prep(tree, support){
+  tree.resolve_polytomies();
+  tree.suppress_unifurcations();
+  const leaves = new Set();
+  tree.traverse_postorder().forEach(function(node) {
+    if (node.edge_length === null) {
+      node.edge_length = 0;
+    }
+    node.DELETED = false;
+    if (node.is_leaf()) {
+      leaves.add(node.to_string());
+    }
+    else {
+      if (node.to_string() === '') {
+        node.confidence = 100;
+      }
+      else {
+        node.confidence = Number(node.to_string());
+      }
+      if (node.confidence < support) {
+        node.edge_length = Infinity;
+      }
+    }
+  });
+  return leaves;
+}
+
+export function pairwise_dists_below_thresh(tree,threshold) {
   //TODO
 }
 
 export const test = () => {
-  console.log("hello");
 }
