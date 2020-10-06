@@ -91,7 +91,7 @@ export function cut(node) {
   return cluster;
 }
 
-export function prep(tree, support){
+export function prep(tree, support) {
   tree.resolve_polytomies();
   tree.suppress_unifurcations();
   const leaves = new Set();
@@ -120,6 +120,61 @@ export function prep(tree, support){
 
 export function pairwise_dists_below_thresh(tree,threshold) {
   //TODO
+}
+
+export function min_clusters_threshold_max(tree, threshold, support) {
+  const leaves = prep(tree,support);
+  const clusters = [];
+  tree.traverse_postorder().forEach(function(node) {
+    if (node.DELETED) {
+      return;
+    }
+    if (node.is_leaf()) {
+      node.left_dist = 0;
+      node.right_dist = 0;
+    }
+    else {
+      if (node.children[0].DELETED && node.children[1].DELETED) {
+        cut(node);
+        return;
+      }
+      if (node.children[0].DELETED) {
+        node.left_dist = 0;
+      }
+      else {
+        node.left_dist = Math.max(node.children[0].left_dist, node.children[0].right_dist) + node.children[0].edge_length;
+      }
+      if (node.children[1].DELETED) {
+        node.right_dist = 0;
+      }
+      else {
+        node.right_dist = Math.max(node.children[1].left_dist, node.children[1].right_dist) + node.children[1].edge_length;
+      }
+
+      if (node.left_dist + node.right_dist > threshold) {
+        let cluster = [];
+        if (node.left_dist > node.right_dist) {
+          cluster = cut(node.children[0]);
+          node.left_dist = 0;
+        }
+        else {
+          cluster = cut(node.children[1]);
+          node.right_dist = 0;
+        }
+
+        if (cluster.length != 0) {
+          clusters.push(cluster);
+          cluster.forEach(function(leaf) {
+            leaves.delete(leaf);
+          });
+        }
+      }
+    }
+  });
+  if (leaves.length != 0) {
+    clusters.push(Array.from(leaves));
+  }
+  return clusters;
 }
 
 export const test = () => {
