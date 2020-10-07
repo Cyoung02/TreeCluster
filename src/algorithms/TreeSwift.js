@@ -9,7 +9,8 @@ export class TreeNode {
     this.DELETED = false;
     this.confidence = null;
     this.left_dist = null;
-    this.right_dist = null
+    this.right_dist = null;
+    this.edge_params = null
   }
 
   to_string() {
@@ -140,5 +141,88 @@ export class Tree {
       n.children.forEach(element => s.push(element));
     }
     return res;
+  }
+
+  static read_tree_newick(newick) {
+    const BRACKET = {
+      '[': ']',
+      '{': '}',
+      "'": "'",
+      '"': '"', 
+    }
+
+    if (typeof newick != "string") {
+      throw new TypeError("Tree not a string!");
+    }
+    
+    let ts = newick.trim();
+    const t = new Tree();
+    //try {
+      t.is_rooted = newick.startsWith('[&R]');
+      if (ts[0] === '[') {
+        let temp = ts.split(']')
+        ts = temp.splice(1, temp.length).join(']').trim();
+        ts = ts.replace(', ',',');
+      }
+      let n = t.root; 
+      let i = 0;
+      while (i < ts.length) {
+        if (ts[i] === ';') {
+          if (i != ts.length - 1 || n != t.root) {
+            throw new Error("Tree not valid Newick Tree");
+          }
+        }
+        else if (ts[i] === '(') {
+          let c = new TreeNode();
+          n.add_child(c);
+          n = c;
+        }
+        else if (ts[i] === ')') {
+          n = n.parent;
+        }
+        else if (ts[i] === ',') {
+          n = n.parent;
+          let c = new TreeNode();
+          n.add_child(c);
+          n = c;
+        }
+        else if (ts[i] === ':') {
+          i++;
+          let ls = '';
+          while (ts[i] !== 'c' && ts[i] !== ')' && ts[i] != ';') {
+            ls += ts[i];
+            i++;
+          }
+          if (ls[0] === '[') {
+            let temp = ls.split(']');
+            n.edge_params = temp.splice(0, temp.length - 1).join(']');
+            ls = temp[temp.length - 1];
+          }
+          n.edge_length = parseFloat(ls);
+          i--;
+        }
+        else {
+          let label = '';
+          let bracket = null;
+          while (bracket != null || ts[i] in BRACKET || (ts[i] !== ':' && ts[i] !== ',' && ts[i] !== ';' && ts[i] !== ')')) {
+            if (ts[i] in BRACKET && bracket === null) {
+              bracket = ts[i];
+            }
+            else if (bracket !== null && ts[i] === BRACKET[bracket]) {
+              bracket = null;
+            }
+            label += ts[i];
+            i++;
+          }
+          i--;
+          n.label = label;
+        }
+        i++;
+      }
+    //}
+    //catch(e) {
+    //  throw new Error("Failed to parse string as Newick");
+    //}
+    return t;
   }
 }

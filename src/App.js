@@ -45,7 +45,8 @@ class App extends React.Component {
    */
   performClustering = (event) => {
     //TODO perform clustering analyses
-    treecluster.test();
+    //treecluster.test("[here]has]dfasi");
+    treecluster.run(this.state.tree, this.state.threshold, this.state.method);
   }
 
   /*

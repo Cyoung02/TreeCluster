@@ -123,6 +123,7 @@ export function pairwise_dists_below_thresh(tree,threshold) {
 }
 
 export function min_clusters_threshold_max(tree, threshold, support) {
+  tree = Tree.read_tree_newick(tree);
   const leaves = prep(tree,support);
   const clusters = [];
   tree.traverse_postorder().forEach(function(node) {
@@ -162,7 +163,7 @@ export function min_clusters_threshold_max(tree, threshold, support) {
           node.right_dist = 0;
         }
 
-        if (cluster.length != 0) {
+        if (cluster.length !== 0) {
           clusters.push(cluster);
           cluster.forEach(function(leaf) {
             leaves.delete(leaf);
@@ -171,12 +172,24 @@ export function min_clusters_threshold_max(tree, threshold, support) {
       }
     }
   });
-  if (leaves.length != 0) {
+  if (leaves.length !== 0) {
     clusters.push(Array.from(leaves));
   }
   return clusters;
 }
 
-export const test = () => {
-  console.log("hello");
+export const test = (hi) => {
+  const BRACKETS = {
+    '[': ']',
+    '{': '}',
+    "'": "'",
+    '"': '"', 
+  }
+  console.log(BRACKETS['[']);
+}
+
+export function run(tree, threshold, method) { 
+  if (method === "Max") {
+    console.log(min_clusters_threshold_max(tree, threshold, -Infinity));
+  }
 }

@@ -19,14 +19,11 @@ def merge_multi_sorted_lists(lists):
         inds[l] += 1
     return out
 
-lists=[[1,4,7],[2,5,8],[3,6,9]]
+BRACKET = {
+    '[': ']', # square bracket
+    '{': '}', # curly bracket
+    "'": "'", # single-quote
+    '"': '"', # double-quote
+}
 
-pq = PriorityQueue()
-for l in range(len(lists)):
-    if len(lists[l]) != 0:
-        pq.put(lists[l][0],l)
-
-print(pq.get());
-print(pq.get());
-print(pq.get());
-print(pq.empty());
+print(']' in BRACKET)
